@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Все анкеты — Центр «Новый Путь»</title>
+
+<link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="index.html" class="logo">
+      <div class="logo__mark">Н</div>
+      <span>Новый Путь</span>
+    </a>
+    <div class="header__actions">
+      <a href="profiles.html" class="header__login">Все анкеты</a>
+      <div class="header__group" data-auth></div>
+    </div>
+  </div>
+</header>
+
+<section class="catalog-hero">
+  <div class="container">
+    <div class="section__tag">Каталог</div>
+    <h1>Все анкеты подопечных</h1>
+    <p>Полный список людей, которым нужна помощь. Нажмите на карточку, чтобы узнать подробнее и поддержать.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="filters" id="filters">
+      <div class="filter active" data-filter="all">Все</div>
+      <div class="filter" data-filter="Психологическая помощь">Психологическая помощь</div>
+      <div class="filter" data-filter="Логопедия">Логопедия</div>
+      <div class="filter" data-filter="Трудовые мастерские">Трудовые мастерские</div>
+      <div class="filter" data-filter="Арт-терапия">Арт-терапия</div>
+      <div class="filter" data-filter="Социальная интеграция">Социальная интеграция</div>
+    </div>
+
+    <div class="catalog-grid" id="catalog"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>© 2026 Центр «Новый Путь»</span>
+    <div class="footer__links">
+      <a href="#">Политика конфиденциальности</a>
+      <a href="index.html">Главная</a>
+      <a href="auth.html">Вход</a>
+    </div>
+  </div>
+</footer>
+
+
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Центр «Новый Путь»</title>
+<link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="index.html" class="logo">
+      <div class="logo__mark">Н</div>
+      <span>Новый Путь</span>
+    </a>
+    <div class="header__actions">
+      <a href="profiles.html" class="header__login">Все анкеты</a>
+      <div class="header__group" data-auth></div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div>
+      <div class="hero__badge">Работаем с 2010 года</div>
+      <h1>Каждый заслуживает <em>свой путь</em></h1>
+      <p class="lead">Мы помогаем людям с особенностями интеллектуального развития раскрыть свой потенциал, обрести навыки и найти своё место в мире.</p>
+      <div class="hero__actions" data-auth-cta></div>
+    </div>
+    <div class="hero__visual">
+      <svg viewBox="0 0 400 400" fill="none">
+        <circle cx="150" cy="150" r="42" fill="#fff" opacity=".95"/>
+        <path d="M90 310 Q90 230 150 230 Q210 230 210 310 Z" fill="#fff" opacity=".95"/>
+        <circle cx="265" cy="160" r="36" fill="#fff" opacity=".9"/>
+        <path d="M210 310 Q210 245 265 245 Q320 245 320 310 Z" fill="#fff" opacity=".9"/>
+        <circle cx="218" cy="258" r="9" fill="#E4B363"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="stories">
+  <div class="container">
+    <div class="section__head">
+      <div class="section__tag">Нужна помощь</div>
+      <h2>Истории наших подопечных</h2>
+      <p>Нажмите на карточку, чтобы узнать подробнее и помочь</p>
+    </div>
+
+    <div class="cards-nav">
+      <button class="cards-nav__btn" onclick="scrollCards(-1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="cards-nav__btn" onclick="scrollCards(1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="cards-line" id="cards"></div>
+
+    <div style="text-align:center;margin-top:20px">
+      <a href="profiles.html" class="btn btn--outline">
+        Показать все анкеты
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>© 2026 Центр «Новый Путь»</span>
+    <div class="footer__links">
+      <a href="#">Политика конфиденциальности</a>
+      <a href="profiles.html">Все анкеты</a>
+      <a href="auth.html">Вход</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+const cards = document.getElementById('cards');
+cards.innerHTML = getAllProfiles().map(p => `
+  <a class="profile-card" href="profile.html?id=${p.id}">
+    <div class="profile-card__photo">${photoSvg()}</div>
+    <div class="profile-card__body">
+      <div class="profile-card__name">${escapeHtml(p.name)} ${escapeHtml(p.surname)}</div>
+      <div class="profile-card__age">${p.age} лет · ${escapeHtml(p.city)}</div>
+      <div class="profile-card__desc">${escapeHtml(p.desc.slice(0, 110))}...</div>
+      <div class="profile-card__btn">
+        Поддержать
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </a>
+`).join('');
+
+function scrollCards(dir){
+  const card = cards.querySelector('.profile-card');
+  if (!card) return;
+  const step = card.offsetWidth + 24;
+  cards.scrollBy({left: dir * step, behavior: 'smooth'});
+}
+</script>
+
+</body>
+</html>

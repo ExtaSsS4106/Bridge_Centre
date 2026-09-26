@@ -10,4 +10,4 @@ class profiles(models.Model):
 class cards(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     description = models.TextField()
-    requisites = models.TextField()
+    requisites = models.JSONField()

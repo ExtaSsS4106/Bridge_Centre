@@ -8,7 +8,7 @@ from django.shortcuts import render
 # Create your views here.
 """Рендер первой страницы"""
 def index(request):
-    return render(request, 'test/index.html')
+    return render(request, 'main/index.html')
 
 
 
@@ -45,3 +45,8 @@ def sign_up(request):
     else:
         form = RegisterForm()
     return render(request, 'registration/reg.html', {"form": form})
+
+
+
+def get_cards(request):
+    pass

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Профиль — Центр «Новый Путь»</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="index.html" class="logo">
+      <div class="logo__mark">Н</div>
+      <span>Новый Путь</span>
+    </a>
+    <div class="header__actions">
+      <a href="profiles.html" class="header__login">Все анкеты</a>
+      <div class="header__group" data-auth></div>
+    </div>
+  </div>
+</header>
+
+<div class="container profile">
+  <a href="profiles.html" class="profile__back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Назад ко всем анкетам
+  </a>
+
+  <div class="profile__grid">
+    <div>
+      <div class="profile__photo">
+        <svg viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="75" r="38" fill="#fff" opacity=".95"/>
+          <path d="M35 185 Q35 120 100 120 Q165 120 165 185 Z" fill="#fff" opacity=".95"/>
+        </svg>
+      </div>
+    </div>
+    <div class="profile__info">
+      <h1 id="name">Загрузка...</h1>
+      <div class="profile__age" id="age">—</div>
+      <p class="profile__desc" id="desc">—</p>
+
+      <div class="profile__meta">
+        <div class="profile__meta-item"><label>Город</label><strong id="city">—</strong></div>
+        <div class="profile__meta-item"><label>Программа</label><strong id="program">—</strong></div>
+        <div class="profile__meta-item"><label>С нами</label><strong id="since">—</strong></div>
+        <div class="profile__meta-item"><label>Собрано</label><strong id="raised">—</strong></div>
+      </div>
+
+      <div id="owner-box" style="display:none">
+        <div class="owner-note">
+          <span class="owner-note__badge">Ваша анкета</span>
+          <button class="btn btn--outline" id="delete-btn" type="button">Удалить анкету</button>
+        </div>
+      </div>
+
+      <div class="profile__progress">
+        <div class="profile__progress-head">
+          <span>Цель на год</span>
+          <span id="percent">0%</span>
+        </div>
+        <div class="progress"><div class="progress__bar" id="bar" style="width:0%"></div></div>
+      </div>
+
+      <div class="donate-box">
+        <h3>Поддержать</h3>
+        <div class="amount-options">
+          <div class="amount-option" onclick="selectAmount(this,500)"><div class="amount-option__value">500 ₽</div><div class="amount-option__label">Разово</div></div>
+          <div class="amount-option active" onclick="selectAmount(this,1500)"><div class="amount-option__value">1 500 ₽</div><div class="amount-option__label">Популярно</div></div>
+          <div class="amount-option" onclick="selectAmount(this,5000)"><div class="amount-option__value">5 000 ₽</div><div class="amount-option__label">Максимум</div></div>
+        </div>
+        <input class="form__input" id="donate-amount" type="number" value="1500" placeholder="Своя сумма" min="100">
+      </div>
+
+      <div class="profile__actions">
+        <a href="auth.html#register" class="btn btn--primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Поддержать
+        </a>
+        <button class="btn btn--outline">Поделиться</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>© 2026 Центр «Новый Путь»</span>
+    <div class="footer__links">
+      <a href="#">Политика конфиденциальности</a>
+      <a href="index.html">Главная</a>
+      <a href="profiles.html">Все анкеты</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const id = parseInt(params.get('id')) || 1;
+const all = getAllProfiles();
+const p = all.find(x => x.id === id) || all[0];
+
+document.getElementById('name').textContent = p.name + ' ' + p.surname;
+document.getElementById('age').textContent = p.age + ' лет';
+document.getElementById('desc').textContent = p.desc;
+document.getElementById('city').textContent = p.city;
+document.getElementById('program').textContent = p.program;
+document.getElementById('since').textContent = p.since;
+document.getElementById('raised').textContent = money(p.raised);
+
+const percent = progressOf(p);
+document.getElementById('percent').textContent = percent + '%';
+document.getElementById('bar').style.width = percent + '%';
+
+document.title = p.name + ' ' + p.surname + ' — Центр «Новый Путь»';
+
+/* Удаление доступно только автору своей анкеты */
+const user = getUser();
+if (p.custom && user && p.owner === user.email) {
+  document.getElementById('owner-box').style.display = 'block';
+  document.getElementById('delete-btn').addEventListener('click', function () {
+    if (!confirm('Удалить анкету «' + p.name + ' ' + p.surname + '»?')) return;
+    removeProfile(p.id);
+    location.href = 'profiles.html';
+  });
+}
+
+function selectAmount(el, value){
+  document.querySelectorAll('.amount-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('donate-amount').value = value;
+}
+</script>
+
+</body>
+</html>

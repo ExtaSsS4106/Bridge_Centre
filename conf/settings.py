@@ -156,9 +156,15 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.1/howto/static-files/
+STATIC_URL = '/static/'          # ← ведущий слэш обязателен
 
-STATIC_URL = 'static/'
+# Папки, где Django ищет статику в режиме разработки
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Куда соберётся статика при collectstatic (для продакшена)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Email

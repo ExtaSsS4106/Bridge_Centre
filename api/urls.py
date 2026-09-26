@@ -1,6 +1,7 @@
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
+from .views import GetCards, EditCard
 from .views import (
     RegisterView, ProfileView, LogoutView,
     AllUsers,AmIsuperUser, ProfileInfo, ErrorResponse
@@ -19,5 +20,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     
     path('all-users/', AllUsers.as_view(), name='all-users'),
+
+    path('api/cards/',      GetCards.as_view(), name='cards-list'),
+    path('api/cards/edit/', EditCard.as_view(), name='card-edit'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

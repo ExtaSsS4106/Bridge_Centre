@@ -18,10 +18,10 @@
         <!-- Блок "Нет аккаунта?" -->
         <div class="d-flex justify-content-center align-items-center gap-2 mb-4">
           <span class="text-secondary small">🤔 Нет аккаунта?</span>
-          <a href="{% url 'sign_up' %}" class="btn btn-sm btn-outline-primary">Зарегистрироваться</a>
+          <a href="{% url 'web-signup' %}" class="btn btn-sm btn-outline-primary">Зарегистрироваться</a>
         </div>
 
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'web-login' %}">
           {% csrf_token %}
 
           <!-- Имя пользователя -->

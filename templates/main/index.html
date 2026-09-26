@@ -1,4 +1,5 @@
 {% load static %}
+{% load cards_tags %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,13 +12,22 @@
 
 <header class="header">
   <div class="container header__inner">
-    <a href="index.html" class="logo">
+    <a href="{% url 'index' %}" class="logo">
       <div class="logo__mark">Н</div>
       <span>Новый Путь</span>
     </a>
+
     <div class="header__actions">
-      <a href="profiles.html" class="header__login">Все анкеты</a>
-      <div class="header__group" data-auth></div>
+      {% if user.is_authenticated %}
+        <span class="user-chip">
+          <span class="user-chip__dot"></span>
+          {{ user.username }}
+        </span>
+        <a href="{% url 'web-logout' %}" class="header__login">Выйти</a>
+      {% else %}
+        <a href="{% url 'web-login' %}" class="header__login">Войти</a>
+        <a href="{% url 'web-signup' %}" class="header__register">Регистрация</a>
+      {% endif %}
     </div>
   </div>
 </header>
@@ -27,8 +37,18 @@
     <div>
       <div class="hero__badge">Работаем с 2010 года</div>
       <h1>Каждый заслуживает <em>свой путь</em></h1>
-      <p class="lead">Мы помогаем людям с особенностями интеллектуального развития раскрыть свой потенциал, обрести навыки и найти своё место в мире.</p>
-      <div class="hero__actions" data-auth-cta></div>
+      <p class="lead">
+        Мы помогаем людям с особенностями интеллектуального развития раскрыть свой
+        потенциал, обрести навыки и найти своё место в мире.
+      </p>
+      <div class="hero__actions">
+        {% if user.is_authenticated %}
+          <a href="{% url 'web-my_card' %}" class="btn btn--primary">Моя карточка</a>
+        {% else %}
+          <a href="{% url 'web-signup' %}" class="btn btn--primary">Присоединиться</a>
+          <a href="#stories" class="btn btn--outline">Узнать больше</a>
+        {% endif %}
+      </div>
     </div>
     <div class="hero__visual">
       <svg viewBox="0 0 400 400" fill="none">
@@ -42,31 +62,60 @@
   </div>
 </section>
 
+{# --- Получаем карточки через template tag --- #}
+{% get_all_cards 12 as cards_list %}
+
 <section class="section" id="stories">
   <div class="container">
     <div class="section__head">
-      <div class="section__tag">Нужна помощь</div>
-      <h2>Истории наших подопечных</h2>
-      <p>Нажмите на карточку, чтобы узнать подробнее и помочь</p>
+      <div class="section__tag">Карточки</div>
+      <h2>Карточки наших подопечных</h2>
+      <p>Нажмите на карточку, чтобы узнать подробнее</p>
     </div>
 
-    <div class="cards-nav">
-      <button class="cards-nav__btn" onclick="scrollCards(-1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      </button>
-      <button class="cards-nav__btn" onclick="scrollCards(1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-
-    <div class="cards-line" id="cards"></div>
-
-    <div style="text-align:center;margin-top:20px">
-      <a href="profiles.html" class="btn btn--outline">
-        Показать все анкеты
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
+    {% if cards_list %}
+      <div class="catalog-grid">
+        {% for card in cards_list %}
+          <a class="catalog-card" href="{% url 'web-card_view' card.user.id %}">
+            <div class="catalog-card__photo">
+              <svg viewBox="0 0 200 200" fill="none" aria-hidden="true">
+                <circle cx="100" cy="80" r="30" fill="#fff" opacity=".95"/>
+                <path d="M50 175 Q50 125 100 125 Q150 125 150 175 Z"
+                      fill="#fff" opacity=".95"/>
+              </svg>
+            </div>
+            <div class="catalog-card__body">
+              <div class="catalog-card__name">
+                {{ card.user.get_full_name|default:card.user.username }}
+              </div>
+              <div class="catalog-card__meta">
+                @{{ card.user.username }}
+                {% if card.user.date_joined %}
+                  · с {{ card.user.date_joined|date:"Y" }}
+                {% endif %}
+              </div>
+              <div class="catalog-card__desc">
+                {{ card.description|truncatechars:120 }}
+              </div>
+              <div class="catalog-card__footer">
+                <span class="catalog-card__raised"><strong>Поддержать</strong></span>
+                <span class="catalog-card__mini-progress"><div style="width:60%"></div></span>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="catalog-empty">
+        <h3>Пока нет карточек</h3>
+        <p>Станьте первым, кто создаст свою карточку.</p>
+        {% if user.is_authenticated %}
+          <a href="{% url 'web-card_create' %}" class="btn btn--primary" style="margin-top:16px">
+            Создать карточку
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -75,37 +124,14 @@
     <span>© 2026 Центр «Новый Путь»</span>
     <div class="footer__links">
       <a href="#">Политика конфиденциальности</a>
-      <a href="profiles.html">Все анкеты</a>
-      <a href="auth.html">Вход</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'web-logout' %}">Выйти</a>
+      {% else %}
+        <a href="{% url 'web-login' %}">Вход</a>
+      {% endif %}
     </div>
   </div>
 </footer>
-
-<script src="app.js"></script>
-<script>
-const cards = document.getElementById('cards');
-cards.innerHTML = getAllProfiles().map(p => `
-  <a class="profile-card" href="profile.html?id=${p.id}">
-    <div class="profile-card__photo">${photoSvg()}</div>
-    <div class="profile-card__body">
-      <div class="profile-card__name">${escapeHtml(p.name)} ${escapeHtml(p.surname)}</div>
-      <div class="profile-card__age">${p.age} лет · ${escapeHtml(p.city)}</div>
-      <div class="profile-card__desc">${escapeHtml(p.desc.slice(0, 110))}...</div>
-      <div class="profile-card__btn">
-        Поддержать
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </div>
-  </a>
-`).join('');
-
-function scrollCards(dir){
-  const card = cards.querySelector('.profile-card');
-  if (!card) return;
-  const step = card.offsetWidth + 24;
-  cards.scrollBy({left: dir * step, behavior: 'smooth'});
-}
-</script>
 
 </body>
 </html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Центр «Мост» — реабилитация и общественная интеграция</title>
+  <meta name="description" content="Центр «Мост» — психосоциальная реабилитация и общественная интеграция людей с психическими особенностями. Поддержка, сопровождение, группы, помощь семье.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6f5f2;
+      --surface:#ffffff;
+      --ink:#1b1f23;
+      --muted:#5b6470;
+      --line:#e5e2dc;
+      --brand:#2f6b5f;
+      --brand-2:#a8c9bd;
+      --brand-ink:#0f3a32;
+      --accent:#e9c46a;
+      --radius:18px;
+      --radius-sm:12px;
+      --shadow:0 10px 30px rgba(20,30,25,.06);
+      --shadow-lg:0 24px 60px rgba(20,30,25,.10);
+      --maxw:1160px;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    h1,h2,h3,h4{line-height:1.2;margin:0 0 .6em;font-weight:800;letter-spacing:-.01em}
+    p{margin:0 0 1em}
+    ul{margin:0;padding:0;list-style:none}
+
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    .section{padding:88px 0}
+    .section--tight{padding:64px 0}
+    .eyebrow{
+      display:inline-block;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--brand);
+      margin-bottom:14px;
+    }
+    .lead{font-size:18px;color:var(--muted);max-width:60ch}
+
+    /* Header */
+    header.site{
+      position:sticky;top:0;z-index:50;
+      background:rgba(246,245,242,.85);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      height:72px;
+    }
+    .logo{
+      display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;
+    }
+    .logo-mark{
+      width:34px;height:34px;border-radius:10px;
+      background:linear-gradient(135deg,var(--brand) 0%, #4d8a7c 100%);
+      display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800;
+      box-shadow:0 6px 14px rgba(47,107,95,.35);
+    }
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{font-size:15px;font-weight:600;color:var(--muted);transition:color .2s}
+    .nav-links a:hover{color:var(--brand)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:13px 22px;border-radius:999px;font-weight:700;font-size:15px;
+      border:1px solid transparent;cursor:pointer;transition:.2s;white-space:nowrap;
+    }
+    .btn--primary{background:var(--brand);color:#fff;box-shadow:0 8px 20px rgba(47,107,95,.28)}
+    .btn--primary:hover{background:var(--brand-ink);transform:translateY(-1px)}
+    .btn--ghost{background:transparent;color:var(--brand-ink);border-color:rgba(47,107,95,.25)}
+    .btn--ghost:hover{background:#fff;border-color:var(--brand)}
+    .btn--light{background:#fff;color:var(--brand-ink)}
+    .btn--light:hover{background:#f0faf7}
+    .nav-cta{display:flex;gap:10px;align-items:center}
+    .burger{display:none;background:none;border:0;padding:8px;cursor:pointer}
+    .burger span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;border-radius:2px}
+
+    /* Hero */
+    .hero{
+      padding:96px 0 72px;
+      background:
+        radial-gradient(1000px 500px at 85% -10%, rgba(168,201,189,.35), transparent 60%),
+        radial-gradient(700px 400px at 0% 100%, rgba(233,196,106,.18), transparent 60%);
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;
+    }
+    .hero h1{
+      font-size:clamp(32px,4.2vw,52px);
+      letter-spacing:-.02em;
+      margin-bottom:20px;
+    }
+    .hero h1 .accent{
+      color:var(--brand);
+      position:relative;
+    }
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+    .hero-card{
+      background:var(--surface);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-lg);
+      padding:28px;
+      border:1px solid var(--line);
+    }
+    .hero-card h3{font-size:16px;margin-bottom:14px;color:var(--brand-ink)}
+    .stat{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
+    .stat:last-child{border-bottom:0;padding-bottom:0}
+    .stat-num{font-weight:800;font-size:22px;color:var(--brand);min-width:64px}
+    .stat-text{font-size:14.5px;color:var(--muted)}
+
+    /* About */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+    .about-text p{color:var(--muted);font-size:17px}
+    .quote{
+      margin-top:24px;padding:20px 22px;border-left:3px solid var(--brand);
+      background:#fff;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+      font-style:italic;color:var(--brand-ink);font-weight:600;
+    }
+
+    /* Cards */
+    .cards{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;margin-top:44px;
+    }
+    .card{
+      background:var(--surface);border:1px solid var(--line);
+      border-radius:var(--radius);padding:26px;
+      transition:.25s;box-shadow:var(--shadow);
+    }
+    .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--brand-2)}
+    .card-icon{
+      width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+      background:linear-gradient(135deg,#e7f3ee,#d3ece2);color:var(--brand);
+      font-size:20px;margin-bottom:16px;
+    }
+    .card h3{font-size:17px;margin-bottom:8px}
+    .card p{color:var(--muted);font-size:15px;margin:0}
+
+    /* Audience */
+    .audience-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:32px}
+    .audience-item{
+      display:flex;gap:12px;align-items:flex-start;
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
+      padding:16px 18px;font-size:15px;
+    }
+    .audience-item .dot{
+      flex:0 0 auto;width:22px;height:22px;border-radius:50%;
+      background:var(--brand-2);color:var(--brand-ink);
+      display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:2px;
+    }
+
+    /* Steps */
+    .steps{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;margin-top:44px;counter-reset:step;
+    }
+    .step{
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+      padding:26px;position:relative;
+    }
+    .step::before{
+      counter-increment:step;content:counter(step,decimal-leading-zero);
+      position:absolute;top:-14px;left:22px;
+      background:var(--brand);color:#fff;font-weight:800;font-size:13px;
+      padding:6px 12px;border-radius:999px;letter-spacing:.06em;
+    }
+    .step h4{font-size:16px;margin:14px 0 8px}
+    .step p{color:var(--muted);font-size:14.5px;margin:0}
+
+    /* CTA */
+    .cta{
+      background:linear-gradient(135deg,#1f4d44 0%, #2f6b5f 100%);
+      color:#fff;border-radius:24px;padding:56px;
+      display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;
+      box-shadow:var(--shadow-lg);
+    }
+    .cta h2{font-size:clamp(26px,3vw,36px);color:#fff;margin-bottom:14px}
+    .cta p{color:rgba(255,255,255,.85);font-size:16px;margin:0 0 6px}
+    .cta-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .cta .btn--primary{background:var(--accent);color:#3a2b00;box-shadow:none}
+    .cta .btn--primary:hover{background:#f0cf7c;color:#3a2b00}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+    .contact-info{display:flex;flex-direction:column;gap:20px}
+    .contact-item{display:flex;gap:14px;align-items:flex-start}
+    .contact-item .ico{
+      width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid var(--line);
+      display:grid;place-items:center;font-size:18px;color:var(--brand);flex:0 0 auto;
+    }
+    .contact-item b{display:block;font-size:15px}
+    .contact-item span{color:var(--muted);font-size:14.5px}
+
+    form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px;color:var(--brand-ink)}
+    .field input,.field textarea{
+      width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;
+      font:inherit;font-size:15px;background:#fbfaf8;transition:.2s;
+    }
+    .field input:focus,.field textarea:focus{
+      outline:none;border-color:var(--brand);background:#fff;
+      box-shadow:0 0 0 4px rgba(47,107,95,.12);
+    }
+    .field textarea{resize:vertical;min-height:110px}
+    .form-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+    /* Footer */
+    footer.site{
+      border-top:1px solid var(--line);padding:40px 0 32px;margin-top:20px;
+      color:var(--muted);font-size:14.5px;
+    }
+    .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+    .foot-links{display:flex;gap:22px;flex-wrap:wrap}
+    .foot-links a:hover{color:var(--brand)}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;gap:36px}
+      .cta{grid-template-columns:1fr;padding:36px;gap:20px}
+      .nav-links{display:none}
+      .nav-links.open{
+        display:flex;position:absolute;top:72px;left:0;right:0;
+        flex-direction:column;background:#fff;padding:20px;
+        border-bottom:1px solid var(--line);gap:16px;
+      }
+      .nav-cta .btn--ghost{display:none}
+      .burger{display:block}
+      .section{padding:64px 0}
+    }
+    @media (max-width: 520px){
+      .hero{padding:64px 0 40px}
+      .cta{padding:28px}
+      .hero-actions .btn, .cta-actions .btn{width:100%}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="#">
+      <span class="logo-mark">М</span>
+      Центр «Мост»
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">О центре</a>
+      <a href="#help">Кому помогаем</a>
+      <a href="#programs">Программы</a>
+      <a href="#path">Как начать</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn--ghost" href="#contact">Записаться</a>
+      <a class="btn btn--primary" href="tel:+70000000000">Позвонить</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Реабилитация · Интеграция · Поддержка</span>
+      <h1>Центр «Мост»: пространство, где человек <span class="accent">снова становится частью сообщества</span></h1>
+      <p class="lead">
+        Мы помогаем взрослым людям с психическими особенностями восстановить навыки,
+        найти опору и вернуться к активной жизни — в своём темпе, с уважением и поддержкой.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="#contact">Записаться на консультацию</a>
+        <a class="btn btn--ghost" href="#programs">Узнать о программах</a>
+      </div>
+    </div>
+    <aside class="hero-card">
+      <h3>Коротко о нас</h3>
+      <div class="stat">
+        <div class="stat-num">1:1</div>
+        <div class="stat-text">Индивидуальный маршрут реабилитации для каждого участника</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6+</div>
+        <div class="stat-text">Направлений: от бытовых навыков до трудовой подготовки</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-text">Без осуждения, ярлыков и давления. Только уважение и время</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow">О центре</span>
+      <h2>Реабилитация рука об руку с повседневной жизнью</h2>
+    </div>
+    <div class="about-text">
+      <p>
+        Центр «Мост» — это место, где реабилитация идёт рука об руку с повседневной жизнью.
+        Мы не просто проводим занятия: мы создаём среду, в которой человек может пробовать,
+        ошибаться, учиться и снова чувствовать себя уверенно.
+      </p>
+      <p>
+        Мы работаем с людьми с психическими особенностями, их семьями и специалистами.
+        Наша цель — помочь каждому участнику укрепить самостоятельность, расширить
+        социальные связи и найти своё место в обществе.
+      </p>
+      <div class="quote">
+        «Мост» — это не про «исправление». Это про переход: от изоляции — к сообществу,
+        от неуверенности — к опоре, от реабилитации — к жизни.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HELP -->
+<section class="section section--tight" id="help" style="background:#fff;border-block:1px solid var(--line);">
+  <div class="wrap">
+    <span class="eyebrow">Кому мы помогаем</span>
+    <h2>Поддержка для человека и его окружения</h2>
+    <div class="audience-list">
+      <div class="audience-item"><span class="dot">✓</span> Взрослым людям с психическими особенностями</div>
+      <div class="audience-item"><span class="dot">✓</span> Людям после длительного лечения или госпитализации</div>
+      <div class="audience-item"><span class="dot">✓</span> Тем, кому трудно вернуться к быту, общению, работе или учёбе</div>
+      <div class="audience-item"><span class="dot">✓</span> Семьям и близким, которые ищут поддержку и понимание</div>
+      <div class="audience-item"><span class="dot">✓</span> Специалистам и организациям, готовым к сотрудничеству</div>
+      <div class="audience-item"><span class="dot">✓</span> Всем, кто ищет безопасное пространство и принятие</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section" id="programs">
+  <div class="wrap">
+    <span class="eyebrow">Что мы делаем</span>
+    <h2>Программы центра</h2>
+    <p class="lead">Мы сочетаем разные форматы — от индивидуальных встреч до групповых проектов — чтобы поддержка была целостной.</p>
+
+    <div class="cards">
+      <article class="card">
+        <div class="card-icon">🧠</div>
+        <h3>Психосоциальная реабилитация</h3>
+        <p>Восстанавливаем навыки общения, саморегуляции и повседневной жизни.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">🏠</div>
+        <h3>Социально-бытовая адаптация</h3>
+        <p>Учим планировать день, вести хозяйство, заботиться о себе и принимать решения.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">💼</div>
+        <h3>Трудовая реабилитация</h3>
+        <p>Поддерживаем в подготовке к работе, учёбе и профессиональному развитию.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">💬</div>
+        <h3>Психологическая поддержка</h3>
+        <p>Индивидуальные и групповые встречи в безопасном пространстве для разговора.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">🤝</div>
+        <h3>Группы и сообщество</h3>
+        <p>Творческие мастерские, досуг, группы взаимопомощи и совместные проекты.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">👨‍👩‍👧</div>
+        <h3>Поддержка семьи</h3>
+        <p>Консультации, обучение и группы для близких, которые рядом каждый день.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">🧭</div>
+        <h3>Сопровождение</h3>
+        <p>Помогаем выстраивать маршрут к самостоятельной жизни и интеграции в общество.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PATH -->
+<section class="section section--tight" id="path" style="background:#fff;border-block:1px solid var(--line);">
+  <div class="wrap">
+    <span class="eyebrow">Как начать</span>
+    <h2>Путь в четыре шага</h2>
+    <div class="steps">
+      <div class="step">
+        <h4>Заявка</h4>
+        <p>Вы оставляете обращение или звоните нам. Мы отвечаем в течение рабочего дня.</p>
+      </div>
+      <div class="step">
+        <h4>Знакомство</h4>
+        <p>Встреча, на которой мы узнаём человека, его историю и запрос.</p>
+      </div>
+      <div class="step">
+        <h4>Индивидуальный план</h4>
+        <p>Вместе определяем цели и подбираем подходящие программы и формат участия.</p>
+      </div>
+      <div class="step">
+        <h4>Регулярные занятия</h4>
+        <p>Участие в группах, консультациях и проектах. Маршрут пересматриваем по мере движения.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <h2>Первый шаг можно сделать сегодня</h2>
+        <p>Не обязательно точно знать, что вам нужно. Достаточно просто связаться — дальше разберёмся вместе.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn--primary" href="#contact">Оставить заявку</a>
+        <a class="btn btn--light" href="tel:+70000000000">Позвонить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section section--tight" id="contact" style="background:#fff;border-top:1px solid var(--line);">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow">Контакты</span>
+      <h2>Связаться с центром «Мост»</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="ico">📞</div>
+          <div><b>Телефон</b><span>+7 (000) 000-00-00</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="ico">✉️</div>
+          <div><b>Email</b><span>info@most-center.example</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="ico">📍</div>
+          <div><b>Адрес</b><span>г. Город, ул. Примерная, д. 1</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="ico">🕘</div>
+          <div><b>Часы работы</b><span>Пн–Пт: 9:00–18:00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <form action="#" method="post" novalidate>
+      <div class="field">
+        <label for="name">Как вас зовут</label>
+        <input id="name" name="name" type="text" placeholder="Имя" required>
+      </div>
+      <div class="field">
+        <label for="phone">Телефон или email</label>
+        <input id="phone" name="contact" type="text" placeholder="Как с вами связаться" required>
+      </div>
+      <div class="field">
+        <label for="msg">Коротко о запросе</label>
+        <textarea id="msg" name="message" placeholder="Опишите ситуацию в свободной форме"></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary" style="width:100%">Отправить заявку</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Мы свяжемся с вами бережно и конфиденциально.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div>© <span id="year"></span> Центр «Мост». Реабилитация и общественная интеграция.</div>
+    <nav class="foot-links">
+      <a href="#about">О центре</a>
+      <a href="#programs">Программы</a>
+      <a href="#contact">Контакты</a>
+      <a href="#">Политика конфиденциальности</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Год в футере
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Мобильное меню
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.addEventListener('click', e => {
+    if (e.target.tagName === 'A') navLinks.classList.remove('open');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body class="bg-body-tertiary">
+
+  <div class="container min-vh-100 d-flex align-items-center justify-content-center py-4">
+    <div class="card shadow-sm" style="width: 100%; max-width: 480px;">
+      <div class="card-body p-4">
+
+        <h1 class="h4 text-center mb-4">Регистрация</h1>
+
+        <!-- Блок "Уже есть аккаунт?" -->
+        <div class="d-flex justify-content-center align-items-center gap-2 mb-4">
+          <span class="text-secondary small">🤔 Уже есть аккаунт?</span>
+          <a href="{% url 'login' %}" class="btn btn-sm btn-outline-primary">Войти</a>
+        </div>
+
+        <form class="register-form" method="post" action="{% url 'sign_up' %}">
+          {% csrf_token %}
+
+          <!-- Имя пользователя -->
+          <div class="mb-3">
+            <input type="text" name="username" class="form-control"
+                   placeholder="Имя пользователя"
+                   value="{{ form.username.value|default:'' }}" required>
+            {% if form.username.errors %}
+              <div class="invalid-feedback d-block">{{ form.username.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <input type="email" name="email" class="form-control"
+                   placeholder="Email"
+                   value="{{ form.email.value|default:'' }}" required>
+            {% if form.email.errors %}
+              <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Пароль -->
+          <div class="mb-3">
+            <input type="password" name="password1" class="form-control"
+                   placeholder="Пароль" required minlength="6">
+            {% if form.password1.errors %}
+              <div class="invalid-feedback d-block">{{ form.password1.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Подтверждение пароля -->
+          <div class="mb-3">
+            <input type="password" name="password2" class="form-control"
+                   placeholder="Подтверждение пароля" required minlength="6">
+            {% if form.password2.errors %}
+              <div class="invalid-feedback d-block">{{ form.password2.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Общие ошибки формы (если есть) -->
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger py-2 small mb-3">
+              {{ form.non_field_errors.0 }}
+            </div>
+          {% endif %}
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
